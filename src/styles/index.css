@@ -1,0 +1,323 @@
+@import 'tailwindcss';
+
+/* ───────────────────────────────────────────────────────────────
+   Sistema de diseño · Toro Roso Studio
+   Negro profundo + rosa metálico (el cromado del logo) + ciruela
+   satinado (los drapeados de la marca).
+   ─────────────────────────────────────────────────────────────── */
+
+@theme {
+  --color-noir: #050505;
+  --color-ink: #0b070a;
+  --color-plum-950: #0e0710;
+  --color-plum-900: #160b15;
+  --color-plum-800: #22111f;
+  --color-plum-700: #341b30;
+  --color-mauve: #70465f;
+  --color-rose: #b7839d;
+  --color-rose-light: #d9b1c6;
+  --color-rose-deep: #8a5574;
+  --color-pearl: #f2e9ee;
+  --color-ivory: #faf7f8;
+  --color-smoke: #a8979f;
+  --color-line: rgb(183 131 157 / 0.22);
+
+  --font-display: 'Cinzel Variable', 'Cinzel', 'Trajan Pro', Georgia, serif;
+  --font-script: 'Pinyon Script', 'Snell Roundhand', cursive;
+  --font-sans: 'Jost Variable', 'Jost', ui-sans-serif, system-ui, sans-serif;
+
+  --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-curtain: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --animate-shimmer: shimmer 8s linear infinite;
+  --animate-spin-slow: spin 24s linear infinite;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-pulse-soft: pulse-soft 2.8s ease-in-out infinite;
+  --animate-scroll-dot: scroll-dot 2.2s var(--ease-luxe) infinite;
+
+  @keyframes shimmer {
+    to {
+      background-position: 200% center;
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  @keyframes pulse-soft {
+    0%,
+    100% {
+      opacity: 0.55;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.08);
+    }
+  }
+  @keyframes scroll-dot {
+    0% {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    30% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(260%);
+      opacity: 0;
+    }
+  }
+}
+
+/* ── Utilidades de marca ─────────────────────────────────────── */
+
+/* Texto cromado rosa, como el logo. */
+@utility text-metal {
+  background-image: linear-gradient(
+    100deg,
+    #a26a8a 0%,
+    #d3a2bd 12%,
+    #fbeaf3 26%,
+    #d9a9c3 38%,
+    #a46d8d 50%,
+    #ecc9dc 63%,
+    #fff6fb 72%,
+    #c993b1 86%,
+    #a26a8a 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+@utility bg-metal {
+  background-image: linear-gradient(
+    110deg,
+    #8a5574 0%,
+    #c48fae 20%,
+    #f3dce8 38%,
+    #b7839d 55%,
+    #e9c8da 75%,
+    #9a6584 100%
+  );
+  background-size: 200% auto;
+}
+
+@utility container-luxe {
+  width: 100%;
+  max-width: 88rem;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4.5vw, 3.5rem);
+}
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+}
+
+@utility text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px rgb(183 131 157 / 0.45);
+}
+
+@utility hairline-x {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgb(183 131 157 / 0.55), transparent);
+}
+
+@utility glass {
+  background: rgb(14 7 16 / 0.62);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ── Base ───────────────────────────────────────────────────── */
+
+@layer base {
+  html {
+    background: var(--color-noir);
+    color: var(--color-pearl);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    min-height: 100dvh;
+    background: var(--color-noir);
+    overflow-x: clip;
+    font-weight: 350;
+  }
+
+  ::selection {
+    background: rgb(183 131 157 / 0.4);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-rose-light);
+    outline-offset: 3px;
+  }
+
+  button,
+  [role='button'] {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  /* Evita el zoom automático de iOS al enfocar campos. */
+  @media (max-width: 767px) {
+    input,
+    select,
+    textarea {
+      font-size: 16px !important;
+    }
+  }
+
+  input[type='date']::-webkit-calendar-picker-indicator,
+  input[type='time']::-webkit-calendar-picker-indicator {
+    filter: invert(0.85) sepia(0.4) hue-rotate(280deg);
+  }
+}
+
+/* ── Componentes ─────────────────────────────────────────────── */
+
+@layer components {
+  /* Grano editorial sutil sobre todo el sitio. */
+  .grain::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+    pointer-events: none;
+    opacity: 0.045;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* Destello que recorre los botones principales. */
+  .shine {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .shine::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(115deg, transparent 30%, rgb(255 255 255 / 0.55) 48%, transparent 66%);
+    transform: translateX(-130%);
+    transition: transform 1s var(--ease-luxe);
+  }
+  .shine:hover::after,
+  .shine:focus-visible::after {
+    transform: translateX(130%);
+  }
+
+  /* Destello que recorre el cromado del logo (enmascarado con la forma del logo). */
+  .logo-shine {
+    background-image: linear-gradient(105deg, transparent 42%, rgb(255 255 255 / 0.9) 50%, transparent 58%);
+    background-size: 280% 100%;
+    background-repeat: no-repeat;
+    mix-blend-mode: screen;
+    animation: logo-shine 5.5s var(--ease-luxe) infinite;
+  }
+  @keyframes logo-shine {
+    0% {
+      background-position: 100% 0;
+    }
+    55%,
+    100% {
+      background-position: 0% 0;
+    }
+  }
+
+  /* Fondo de respaldo del satén cuando WebGL no está disponible. */
+  .satin-fallback {
+    background:
+      radial-gradient(120% 80% at 20% 20%, rgb(107 52 92 / 0.55), transparent 55%),
+      radial-gradient(90% 70% at 85% 75%, rgb(183 131 157 / 0.18), transparent 60%),
+      linear-gradient(160deg, #160b15, #050505 70%);
+  }
+
+  .field {
+    width: 100%;
+    border-radius: 14px;
+    border: 1px solid rgb(183 131 157 / 0.25);
+    background: rgb(5 5 5 / 0.55);
+    padding: 0.95rem 1.1rem;
+    color: var(--color-pearl);
+    transition:
+      border-color 0.25s,
+      box-shadow 0.25s,
+      background 0.25s;
+  }
+  .field::placeholder {
+    color: rgb(168 151 159 / 0.65);
+  }
+  .field:hover {
+    border-color: rgb(183 131 157 / 0.45);
+  }
+  .field:focus {
+    outline: none;
+    border-color: var(--color-rose);
+    box-shadow: 0 0 0 4px rgb(183 131 157 / 0.16);
+    background: rgb(14 7 16 / 0.8);
+  }
+  .field[aria-invalid='true'] {
+    border-color: #e58aa5;
+    box-shadow: 0 0 0 4px rgb(229 138 165 / 0.12);
+  }
+  select.field {
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1.5l5 5 5-5' fill='none' stroke='%23B7839D' stroke-width='1.4'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 1.1rem center;
+    padding-right: 2.75rem;
+  }
+  select.field option {
+    background: #160b15;
+    color: var(--color-pearl);
+  }
+}
+
+/* ── Movimiento reducido ─────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

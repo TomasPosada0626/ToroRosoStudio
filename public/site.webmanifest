@@ -1,0 +1,15 @@
+{
+  "name": "Toro Roso Studio",
+  "short_name": "Toro Roso",
+  "description": "Maquillaje profesional a domicilio en Envigado, Antioquia.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "lang": "es-CO",
+  "icons": [
+    { "src": "/brand/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/brand/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/brand/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
